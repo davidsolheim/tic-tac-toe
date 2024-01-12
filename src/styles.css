@@ -2,78 +2,84 @@
   box-sizing: border-box;
 }
 
-body {
+body, html {
+  height: 100%; /* Ensure full height */
+  margin: 0; /* Remove default margin */
+  display: flex;
+  justify-content: center; /* Center children horizontally */
+  align-items: center; /* Center children vertically */
   font-family: sans-serif;
-  margin: 20px;
-  padding: 0;
 }
 
 h1 {
-  margin-top: 0;
-  font-size: 22px;
+  font-size: 24px;
+  text-align: center;
 }
 
-h2 {
-  margin-top: 0;
-  font-size: 20px;
+.game {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Align children horizontally in the center */
 }
 
-h3 {
-  margin-top: 0;
-  font-size: 18px;
-}
-
-h4 {
-  margin-top: 0;
-  font-size: 16px;
-}
-
-h5 {
-  margin-top: 0;
-  font-size: 14px;
-}
-
-h6 {
-  margin-top: 0;
-  font-size: 12px;
-}
-
-code {
-  font-size: 1.2em;
-}
-
-ul {
-  padding-inline-start: 20px;
+.board-row {
+  display: flex; /* Align squares in a row */
 }
 
 .square {
   background: #fff;
-  border: 1px solid #000000;
-  float: left;
-  font-size: 24px;
+  border: 2px solid #999; /* Make borders more subtle */
+  font-size: 48px; /* Larger text in squares */
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin: 10;
-  padding: 10;
+  line-height: 64px; /* Increase line height to match height */
+  height: 64px; /* Larger square size */
+  width: 64px; /* Larger square size */
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0; /* Remove padding and use line-height for vertical centering */
   text-align: center;
-  width: 34px;
+  cursor: pointer; /* Cursor indicates clickable squares */
+  transition: background-color 0.3s; /* Smooth background transition */
 }
 
-.board-row:after {
-  clear: both;
-  content: '';
-  display: table;
+.square:hover {
+  background-color: #ddd; /* Light highlight for squares on hover */
 }
 
-.status {
-  margin-bottom: 10px;
-}
-.game {
-  display: flex;
-  flex-direction: row;
+.status, .game-info {
+  margin: 20px;
+  text-align: center; /* Center align the text */
 }
 
+/* Add some modern styling to the game info */
 .game-info {
-  margin-left: 20px;
+  background: #f3f3f3; /* Light background for the sidebar */
+  padding: 10px;
+  border-radius: 8px; /* Rounded corners for modern look */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+/* Style the list of moves for better visibility */
+.game-info ol {
+  list-style: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+}
+
+.game-info li {
+  margin: 5px 0;
+}
+
+.game-info button {
+  background-color: #fff;
+  border: 1px solid #999;
+  padding: 5px 10px;
+  border-radius: 4px; /* Rounded corners on buttons */
+  cursor: pointer; /* Indicate buttons are clickable */
+  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions for interaction */
+}
+
+.game-info button:hover {
+  background-color: #ddd; /* Highlight button background on hover */
+  box-shadow: 0 0 5px rgba(0,0,0,0.2); /* Slight shadow on hover for depth */
 }

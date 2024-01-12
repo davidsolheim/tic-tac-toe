@@ -70,6 +70,15 @@ export default function Game() {
         setHistory(history.slice(0, move + 1));
         setXIsNext((move % 2) === 0);
     }
+    // Updated status logic to include tie game condition
+    const winner = calculateWinner(currentSquares);
+    const isBoardFull = currentSquares.every(square => square !== null);
+    const status = winner
+        ? `Winner: ${winner}`
+        : isBoardFull
+        ? "Tie Game"
+        : `Next player: ${xIsNext ? "X" : "O"}`;
+
 
     const moves = history.map((step, move) => {
         const description = move ? `Go to move #${move}` : 'Go to game start';
