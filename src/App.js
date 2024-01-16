@@ -1,14 +1,13 @@
 import useState from "react";
 import React from "react";
-import "./App.css";
-import Board from "./components/Board";
+import "./styles.css";
+import Game from "./components/Game.js";
 
 
 export default function App() {
   return (
     <div className="App">
-      <h1>Tic Tac Toe</h1>
-      <Board />
+      <Game />
     </div>
   );
 };
