@@ -1,30 +1,39 @@
-import React, { useState } from "react";
-import Board from './Board';
-import { calculateWinner } from "./CalculateWinner";
-import Leaderboard from './Leaderboard'; 
+import React, { useState, useEffect } from "react"; // Import React and useState hook
+import Board from './Board'; // Import Board
+import Leaderboard from './Leaderboard'; // Import Leaderboard
+import { calculateWinner } from "./CalculateWinner"; // Import helper function
 
 
 export default function Game() {
-    const [leaderBoard, setLeaderBoard] = useState([]); // This line should be inside the component
+    // Initialize leaderboard from local storage or as an empty array if not present
+    const [leaderBoard, setLeaderBoard] = useState(() => {
+        const savedLeaderBoard = localStorage.getItem('leaderBoard');
+        return savedLeaderBoard ? JSON.parse(savedLeaderBoard) : [];
+    });
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [xIsNext, setXIsNext] = useState(true);
     const currentSquares = history[history.length - 1];
     const [winnerInitials, setWinnerInitials] = useState('');
-
     function handlePlay(i) {
-        const historyPoint = history
-.slice(0, history.length);
-const current = historyPoint[historyPoint.length - 1];
-const squares = [...current];
+        const historyPoint = history.slice(0, history.length);
+        const current = historyPoint[historyPoint.length - 1];
+        const squares = [...current];
 
-    // If user clicks an occupied square or if game is won, return
-    if (calculateWinner(squares) || squares[i]) return;
+        // If user clicks an occupied square or if game is won, return
+        if (calculateWinner(squares) || squares[i]) return;
     
-    // Fill the square with X or O
-    squares[i] = xIsNext ? "X" : "O";
-    setHistory([...historyPoint, squares]);
-    setXIsNext(!xIsNext); // Switch turns
+        // Fill the square with X or O
+        squares[i] = xIsNext ? "X" : "O";
+        setHistory([...historyPoint, squares]);
+        setXIsNext(!xIsNext); // Switch turns
     }
+    useEffect(() => {
+        // Load the leaderboard from local storage when the component mounts
+        const savedLeaderBoard = localStorage.getItem('leaderBoard');
+        if (savedLeaderBoard) {
+            setLeaderBoard(JSON.parse(savedLeaderBoard));
+        }
+    }, []);
     function handleWinSubmit(event) {
         event.preventDefault(); // Prevent form submission from reloading the page
         const updatedLeaderBoard = [...leaderBoard];
@@ -45,7 +54,16 @@ const squares = [...current];
 
         setLeaderBoard(updatedLeaderBoard);
         setWinnerInitials(''); //Reset for next winner
+        // Save updated leaderboard to local storage
+        localStorage.setItem('leaderBoard', JSON.stringify(updatedLeaderBoard));
         resetGame();
+    }
+    function resetGame() {
+        // Reset the state for a new game
+        setHistory([Array(9).fill(null)]);
+        setXIsNext(true);
+        // You might want to clear the winnerInitials if you are keeping that in state
+        // setWinnerInitials('');
     }
 const winner = calculateWinner(currentSquares);
 const status = winner
